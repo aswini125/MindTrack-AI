@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindTrack AI – Digital Detox & Productivity Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js for data visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ========== HEADER / NAVBAR ========== -->
+  <header class="navbar">
+    <div class="nav-logo">
+      <span class="logo-icon">🧠</span>
+      <span class="logo-text">MindTrack <span class="accent">AI</span></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">Dashboard</a>
+      <a href="#log"       class="nav-link"        onclick="showSection('log')">Log Day</a>
+      <a href="#study"     class="nav-link"        onclick="showSection('study')">Study Mode</a>
+      <a href="#insights"  class="nav-link"        onclick="showSection('insights')">Insights</a>
+    </nav>
+    <div class="nav-score-pill">
+      <span>⚡</span>
+      <span id="nav-score">0 pts</span>
+    </div>
+  </header>
+
+  <!-- ========== HERO BANNER ========== -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">AI-Powered Wellness</p>
+      <h1 class="hero-title">Take Control of<br/><span class="gradient-text">Your Digital Life</span></h1>
+      <p class="hero-subtitle">Track screen time, log your mood, and let AI guide you toward healthier digital habits.</p>
+      <button class="btn-primary" onclick="showSection('log')">Start Tracking →</button>
+    </div>
+    <div class="hero-illustration">
+      <div class="floating-card fc1">📱 3h 20m today</div>
+      <div class="floating-card fc2">😊 Mood: Happy</div>
+      <div class="floating-card fc3">🔥 5-day streak!</div>
+      <div class="hero-circle"></div>
+    </div>
+  </section>
+
+  <!-- ========== MAIN CONTENT AREA ========== -->
+  <main class="main-container">
+
+    <!-- ===== SECTION: DASHBOARD ===== -->
+    <section id="dashboard" class="section active-section">
+      <div class="section-header">
+        <h2>📊 Your Dashboard</h2>
+        <p>Overview of your digital wellness journey</p>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-row" id="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">📱</div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-total-time">0 hrs</span>
+            <span class="stat-label">Total Screen Time</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔥</div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-streak">0</span>
+            <span class="stat-label">Day Streak</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-points">0</span>
+            <span class="stat-label">Points Earned</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">😊</div>
+          <div class="stat-info">
+            <span class="stat-value" id="stat-mood">—</span>
+            <span class="stat-label">Latest Mood</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3 class="chart-title">📅 Daily Screen Time (hrs)</h3>
+          <canvas id="screenTimeChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">😊 Mood vs Screen Time</h3>
+          <canvas id="moodChart"></canvas>
+        </div>
+      </div>
+
+      <!-- AI Prediction Box -->
+      <div class="prediction-box" id="prediction-box">
+        <div class="prediction-icon">🤖</div>
+        <div class="prediction-content">
+          <h3>AI Habit Prediction</h3>
+          <p id="prediction-text">Log a few days to unlock AI predictions!</p>
+        </div>
+      </div>
+
+      <!-- Recent Log Table -->
+      <div class="card">
+        <h3 class="card-title">📋 Recent Logs</h3>
+        <div class="table-wrapper">
+          <table class="data-table" id="log-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Instagram</th>
+                <th>YouTube</th>
+                <th>Other</th>
+                <th>Total</th>
+                <th>Mood</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody id="log-tbody">
+              <tr><td colspan="7" class="empty-row">No data yet. Start logging!</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: LOG DAY ===== -->
+    <section id="log" class="section">
+      <div class="section-header">
+        <h2>📝 Log Your Day</h2>
+        <p>Record your screen time and mood for today</p>
+      </div>
+
+      <div class="form-grid">
+        <!-- Screen Time Card -->
+        <div class="card form-card">
+          <h3 class="card-title">📱 Screen Time (minutes)</h3>
+
+          <div class="form-group">
+            <label for="instagram">Instagram</label>
+            <div class="input-with-icon">
+              <span>📸</span>
+              <input type="number" id="instagram" placeholder="e.g. 45" min="0" max="1440" />
+              <span class="unit">min</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="youtube">YouTube</label>
+            <div class="input-with-icon">
+              <span>▶️</span>
+              <input type="number" id="youtube" placeholder="e.g. 60" min="0" max="1440" />
+              <span class="unit">min</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="whatsapp">WhatsApp</label>
+            <div class="input-with-icon">
+              <span>💬</span>
+              <input type="number" id="whatsapp" placeholder="e.g. 30" min="0" max="1440" />
+              <span class="unit">min</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="other">Other Apps</label>
+            <div class="input-with-icon">
+              <span>📲</span>
+              <input type="number" id="other" placeholder="e.g. 20" min="0" max="1440" />
+              <span class="unit">min</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mood & Submit Card -->
+        <div class="card form-card">
+          <h3 class="card-title">😊 How Are You Feeling?</h3>
+
+          <div class="mood-selector">
+            <div class="mood-option" data-mood="Happy" onclick="selectMood(this)">
+              <span class="mood-emoji">😊</span>
+              <span>Happy</span>
+            </div>
+            <div class="mood-option" data-mood="Neutral" onclick="selectMood(this)">
+              <span class="mood-emoji">😐</span>
+              <span>Neutral</span>
+            </div>
+            <div class="mood-option" data-mood="Stressed" onclick="selectMood(this)">
+              <span class="mood-emoji">😰</span>
+              <span>Stressed</span>
+            </div>
+            <div class="mood-option" data-mood="Tired" onclick="selectMood(this)">
+              <span class="mood-emoji">😴</span>
+              <span>Tired</span>
+            </div>
+          </div>
+
+          <div class="selected-mood-display" id="mood-display">
+            <span>No mood selected</span>
+          </div>
+
+          <!-- Smart Suggestion Preview -->
+          <div class="suggestion-preview" id="suggestion-preview" style="display:none">
+            <div class="suggestion-icon">💡</div>
+            <p id="suggestion-text"></p>
+          </div>
+
+          <button class="btn-primary btn-full" onclick="submitData()">
+            ✅ Save Today's Log
+          </button>
+
+          <div id="submit-message" class="submit-message" style="display:none"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: STUDY MODE ===== -->
+    <section id="study" class="section">
+      <div class="section-header">
+        <h2>🎓 Student Study Mode</h2>
+        <p>Pomodoro timer for deep focus sessions</p>
+      </div>
+
+      <div class="study-grid">
+        <!-- Pomodoro Timer Card -->
+        <div class="card timer-card">
+          <div class="timer-mode-tabs">
+            <button class="mode-tab active" id="focus-tab" onclick="setMode('focus')">🧠 Focus (25 min)</button>
+            <button class="mode-tab" id="break-tab" onclick="setMode('break')">☕ Break (5 min)</button>
+          </div>
+
+          <div class="timer-display">
+            <div class="timer-ring">
+              <svg class="ring-svg" viewBox="0 0 200 200">
+                <circle class="ring-bg" cx="100" cy="100" r="85"/>
+                <circle class="ring-progress" id="ring-progress" cx="100" cy="100" r="85"/>
+              </svg>
+              <div class="timer-text">
+                <span id="timer-minutes">25</span>:<span id="timer-seconds">00</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="motivational-msg" id="motivational-msg">🌟 Ready to focus?</p>
+
+          <div class="timer-controls">
+            <button class="btn-secondary" onclick="resetTimer()">↺ Reset</button>
+            <button class="btn-primary btn-lg" id="start-btn" onclick="toggleTimer()">▶ Start</button>
+          </div>
+
+          <div class="session-count">
+            <span>Sessions completed today:</span>
+            <span class="session-badge" id="session-count">0</span>
+          </div>
+        </div>
+
+        <!-- Study Tips Card -->
+        <div class="card tips-card">
+          <h3 class="card-title">💡 Focus Tips</h3>
+          <ul class="tips-list">
+            <li class="tip-item">
+              <span class="tip-icon">📵</span>
+              <span>Put your phone face-down and on silent</span>
+            </li>
+            <li class="tip-item">
+              <span class="tip-icon">💧</span>
+              <span>Keep a water bottle on your desk</span>
+            </li>
+            <li class="tip-item">
+              <span class="tip-icon">🎧</span>
+              <span>Try lo-fi music or white noise</span>
+            </li>
+            <li class="tip-item">
+              <span class="tip-icon">📝</span>
+              <span>Write your #1 goal before starting</span>
+            </li>
+            <li class="tip-item">
+              <span class="tip-icon">🌿</span>
+              <span>Take a short walk during break</span>
+            </li>
+            <li class="tip-item">
+              <span class="tip-icon">🚫</span>
+              <span>Close all unnecessary browser tabs</span>
+            </li>
+          </ul>
+
+          <div class="xp-tracker">
+            <h4>⚡ Focus XP</h4>
+            <div class="xp-bar-wrap">
+              <div class="xp-bar" id="xp-bar" style="width: 0%"></div>
+            </div>
+            <p id="xp-label">0 / 5 sessions for next reward</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION: INSIGHTS ===== -->
+    <section id="insights" class="section">
+      <div class="section-header">
+        <h2>🔍 Smart Insights</h2>
+        <p>AI-powered suggestions for a healthier digital life</p>
+      </div>
+
+      <!-- Gamification Card -->
+      <div class="card gamification-card">
+        <div class="game-header">
+          <div>
+            <h3>🏆 Your Progress</h3>
+            <p>Earn points by reducing screen time</p>
+          </div>
+          <div class="big-score" id="big-score">0</div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-label">
+            <span>Level Progress</span>
+            <span id="level-label">Level 1 – Beginner</span>
+          </div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="level-bar" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="badges-row" id="badges-row">
+          <div class="badge locked">🌱<br/><small>First Log</small></div>
+          <div class="badge locked">🔥<br/><small>3-Day Streak</small></div>
+          <div class="badge locked">⭐<br/><small>100 Points</small></div>
+          <div class="badge locked">🧘<br/><small>Low Usage</small></div>
+          <div class="badge locked">🎓<br/><small>5 Sessions</small></div>
+        </div>
+      </div>
+
+      <!-- Suggestions Panel -->
+      <div class="suggestions-grid" id="suggestions-grid">
+        <div class="suggestion-card s-default">
+          <span class="s-icon">💡</span>
+          <h4>Log your first day</h4>
+          <p>Go to "Log Day" and add your screen time to unlock personalized suggestions.</p>
+        </div>
+      </div>
+
+      <!-- AI Insights Panel -->
+      <div class="card ai-insights-card">
+        <h3 class="card-title">🤖 AI Habit Analysis</h3>
+        <div id="ai-insights-content">
+          <p class="empty-state-text">Add at least 3 days of data to unlock AI habit analysis.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <p>🧠 MindTrack AI — Built for better digital habits</p>
+    <p class="footer-sub">Data stored locally via Flask + SQLite</p>
+  </footer>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast" style="display:none"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
