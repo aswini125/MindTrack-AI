@@ -77,7 +77,7 @@ mindtrack/
 
 ```bash
 # If you have git:
-git clone https://github.com/yourusername/mindtrack-ai.git
+git clone https://github.com/aswini125/mindtrack-ai.git
 cd mindtrack-ai
 
 # Or just unzip the downloaded folder and open it in VS Code
@@ -256,17 +256,8 @@ No external API is required — all logic runs locally in Python.
 
 **MindTrack AI** — Built with ❤️ for better digital wellness
 
-- 🌐 GitHub: [github.com/yourusername/mindtrack-ai](https://github.com)
-- 📧 Email: yourname@example.com
+- 🌐 GitHub: [github.com/aswini125/mindtrack-ai](https://github.com)
+- 📧 Email: aswinirvm@gmail.com
 
 ---
 
-## 📄 License
-
-MIT License — Free to use, modify, and distribute with attribution.
-
----
-
-> *"The secret of getting ahead is getting started."* — Mark Twain
->
-> Start tracking. Start improving. 🧠✨
