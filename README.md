@@ -9,7 +9,11 @@
 
 | Dashboard | Log Day | Study Mode | Insights |
 |-----------|---------|------------|----------|
-| *(coming soon)* | *(coming soon)* | *(coming soon)* | *(coming soon)* |
+| *<img width="1902" height="936" alt="dashboard-overview png" src="https://github.com/user-attachments/assets/8f1cafb1-55bf-4ca9-8028-e779ca596f4e" />
+* | *<img width="1899" height="905" alt="log-day png" src="https://github.com/user-attachments/assets/05af2b91-44b7-4aaa-87f1-c10b7fdb4c7d" />
+* | *<img width="1889" height="907" alt="study-mode png" src="https://github.com/user-attachments/assets/37f236c9-8840-4d06-be42-aadce8f45bec" />
+* | *<img width="1902" height="909" alt="insights png" src="https://github.com/user-attachments/assets/861cb939-f138-4bca-8d2d-8e1fa487f5d4" />
+* |
 
 ---
 
